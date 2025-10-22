@@ -27,7 +27,7 @@ public class MemberController {
     }
 
     @PostMapping("/members/join")
-    public String joinMember(MemberForm form) {
+    public String joinMember(MemberDto form) {
         Member member = new Member();
         member.setId(form.getId());
         member.setPassword(form.getPassword());

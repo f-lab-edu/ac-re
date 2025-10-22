@@ -1,6 +1,6 @@
 package com.project.acre.controller;
 
-public class MemberForm {
+public class MemberDto {
     private String id;
     private String password;
     private String name;
