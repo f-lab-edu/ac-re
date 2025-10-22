@@ -21,7 +21,7 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public Member join(Member member) {
+    public void join(Member member) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("member").usingGeneratedKeyColumns("rownum");
 
@@ -30,17 +30,17 @@ public class MemberRepositoryImpl implements MemberRepository {
         parameters.put("password", member.getPassword());
         parameters.put("name", member.getName());
         parameters.put("nickname", member.getNickname());
+        parameters.put("birth", member.getBirth());
         parameters.put("email", member.getEmail());
         parameters.put("phone", member.getPhone());
+        parameters.put("classify", member.getClassify());
 
         Number key = jdbcInsert.executeAndReturnKey(parameters);
         member.setKey(key.longValue());
-
-        return member;
     }
 
     @Override
     public Optional<Member> findMember(String id, String password) {
-        return null;
+        return Optional.empty();
     }
 }

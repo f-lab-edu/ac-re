@@ -1,12 +1,24 @@
 package com.project.acre.controller;
 
 public class MemberDto {
+
+    private Long key;
     private String id;
     private String password;
     private String name;
     private String nickname;
+    private String birth;
     private String email;
     private String phone;
+    private String classify;
+
+    public Long getKey() {
+        return key;
+    }
+
+    public void setKey(Long key) {
+        this.key = key;
+    }
 
     public String getId() {
         return id;
@@ -40,6 +52,14 @@ public class MemberDto {
         this.nickname = nickname;
     }
 
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -54,5 +74,13 @@ public class MemberDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getClassify() {
+        return classify;
+    }
+
+    public void setClassify(String classify) {
+        this.classify = classify;
     }
 }

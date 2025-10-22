@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MemberController {
@@ -22,22 +25,13 @@ public class MemberController {
     }
 
     @GetMapping("/members/join")
-    public String joinMember() {
-        return "members/joinMember";
+    public ModelAndView joinMember() {
+        return new ModelAndView("members/joinMember");
     }
 
-    @PostMapping("/members/join")
-    public String joinMember(MemberDto form) {
-        Member member = new Member();
-        member.setId(form.getId());
-        member.setPassword(form.getPassword());
-        member.setName(form.getName());
-        member.setNickname(form.getNickname());
-        member.setEmail(form.getEmail());
-        member.setPhone(form.getPhone());
-
-        memberService.join(member);
-
-        return "redirect:/";
+    @PostMapping("members/join")
+    @ResponseBody
+    public MemberDto joinMember(@RequestBody MemberDto memberDto) {
+        return memberService.join(memberDto);
     }
 }

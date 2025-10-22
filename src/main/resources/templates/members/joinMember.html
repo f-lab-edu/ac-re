@@ -5,29 +5,73 @@
     <title>Join</title>
 </head>
 <body>
-    <div>
-        <form action="/members/join" method="post">
-            <div>
-                <label for="id">아이디</label>
-                <input type="text" id="id" name="id">
-                <br>
-                <label for="password">비밀번호</label>
-                <input type="password" id="password" name="password">
-                <br>
-                <label for="name">이름</label>
-                <input type="text" id="name" name="name">
-                <br>
-                <label for="nickname">별명</label>
-                <input type="text" id="nickname" name="nickname">
-                <br>
-                <label for="email">이메일</label>
-                <input type="email" id="email" name="email">
-                <br>
-                <label for="phone">전화번호</label>
-                <input type="tel" id="phone" name="phone">
-            </div>
-            <button type="submit">등록</button>
-        </form>
-    </div>
+<h1>회원가입</h1>
+<form id="memberForm">
+    <label for="id">아이디</label>
+    <input type="text" id="id" name="id" />
+    <br>
+    <label for="password">비밀번호</label>
+    <input type="password" id="password" name="password" />
+    <br>
+    <label for="name">이름</label>
+    <input type="text" id="name" name="name" />
+    <br>
+    <label for="nickname">별명</label>
+    <input type="text" id="nickname" name="nickname" />
+    <br>
+    <label for="birth">생년월일</label>
+    <input type="date" id="birth" name="birth">
+    <br>
+    <label for="email">이메일</label>
+    <input type="email" id="email" name="email" />
+    <br>
+    <label for="phone">전화번호</label>
+    <input type="tel" id="phone" name="phone" />
+    <br>
+    <label for="user">사용자</label>
+    <input type="radio" id="user" name="classify" value="user" />
+    <label for="company">업체</label>
+    <input type="radio" id="company" name="classify" value="company" />
+    <br>
+    <button type="submit">회원가입하기</button>
+</form>
+
+<script>
+    const memberForm = document.getElementById("memberForm");
+
+    memberForm.addEventListener("submit", function(e){
+        e.preventDefault();
+
+        const id = document.getElementById("id").value;
+        const password = document.getElementById("password").value;
+        const name = document.getElementById("name").value;
+        const nickname = document.getElementById("nickname").value;
+        const birth = document.getElementById("birth").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const classify = document.querySelector('input[name="classify"]:checked').value;
+
+        const memberFormData = {
+            id: id,
+            password: password,
+            name: name,
+            nickname: nickname,
+            birth: birth,
+            email: email,
+            phone: phone,
+            classify: classify
+        };
+
+        fetch('http://localhost:8080/members/join', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(memberFormData)
+        })
+            .then(response => response.json())
+            .then(data => console.log(data));
+    });
+</script>
 </body>
 </html>
