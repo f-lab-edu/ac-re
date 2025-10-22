@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.NoSuchAlgorithmException;
+
 @Controller
 public class MemberController {
     private final MemberService memberService;
@@ -31,7 +33,7 @@ public class MemberController {
 
     @PostMapping("members/join")
     @ResponseBody
-    public MemberDto joinMember(@RequestBody MemberDto memberDto) {
+    public MemberDto joinMember(@RequestBody MemberDto memberDto) throws NoSuchAlgorithmException {
         return memberService.join(memberDto);
     }
 }
