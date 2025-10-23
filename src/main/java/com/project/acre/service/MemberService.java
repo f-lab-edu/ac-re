@@ -3,6 +3,7 @@ package com.project.acre.service;
 import com.project.acre.controller.MemberDto;
 import com.project.acre.domain.Member;
 import com.project.acre.repository.MemberRepository;
+import com.project.acre.util.SHA256;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.Base64;
 
 @Service
 public class MemberService {
+    private final SHA256 sha256 = SHA256.getInstance();
     private final MemberRepository memberRepository;
 
     @Autowired
@@ -23,19 +25,11 @@ public class MemberService {
         return null;
     }
 
-    public static class SHA256 {
-        public String encrypt(String password) throws NoSuchAlgorithmException {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(password.getBytes());
-            byte[] digest = md.digest();
-            return Base64.getEncoder().encodeToString(digest);
-        }
-    }
 
     public MemberDto join(MemberDto memberDto) throws NoSuchAlgorithmException {
         Member member = new Member();
         member.setId(memberDto.getId());
-        member.setPassword(new SHA256().encrypt(memberDto.getPassword()));
+        member.setPassword(sha256.encrypt(memberDto.getPassword()));
         member.setName(memberDto.getName());
         member.setNickname(memberDto.getNickname());
         member.setBirth(memberDto.getBirth());
