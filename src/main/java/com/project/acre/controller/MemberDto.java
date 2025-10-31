@@ -12,6 +12,20 @@ public class MemberDto {
     private String phone;
     private String classify;
 
+    public MemberDto() {
+    }
+
+    public MemberDto(String id, String password, String name, String nickname, String birth, String email, String phone, String classify) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
+        this.nickname = nickname;
+        this.birth = birth;
+        this.email = email;
+        this.phone = phone;
+        this.classify = classify;
+    }
+
     public Long getKey() {
         return key;
     }
