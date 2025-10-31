@@ -31,24 +31,14 @@ public class MemberController {
         return new ResponseEntity<>(memberService.join(memberDto), HttpStatus.OK);
     }
 
-    @ExceptionHandler(value = NoSuchAlgorithmException.class)
-    public ResponseEntity<String> handleException(NoSuchAlgorithmException e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-    }
-
     @GetMapping("/members/login")
-    public ModelAndView login() {
-        return new ModelAndView("members/login");
+    public String login() {
+        return "members/login";
     }
 
     @PostMapping("/members/login")
     @ResponseBody
     public ResponseEntity<MemberDto> login(@RequestBody MemberDto memberDto) throws Exception {
         return new ResponseEntity<>(memberService.login(memberDto.getId(), memberDto.getPassword()), HttpStatus.OK);
-    }
-
-    @ExceptionHandler(value = EmptyResultDataAccessException.class)
-    public ResponseEntity<String> handleException(EmptyResultDataAccessException e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
     }
 }

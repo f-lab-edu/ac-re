@@ -2,6 +2,7 @@ package com.project.acre.service;
 
 import com.project.acre.controller.MemberDto;
 import com.project.acre.domain.Member;
+import com.project.acre.exception.CustomEmptyResultException;
 import com.project.acre.repository.MemberRepository;
 import com.project.acre.util.SHA256;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,19 +46,18 @@ public class MemberService {
         Optional<Member> result = memberRepository.findMember(id, sha256.encrypt(password));
 
         if (result.isEmpty()) {
-            throw new EmptyResultDataAccessException(1);
+            throw new CustomEmptyResultException("사용자 정보를 찾을 수 없습니다.");
         } else {
-            MemberDto memberDto = new MemberDto();
-            memberDto.setId(result.get().getId());
-            memberDto.setPassword(result.get().getPassword());
-            memberDto.setName(result.get().getName());
-            memberDto.setNickname(result.get().getNickname());
-            memberDto.setBirth(result.get().getBirth());
-            memberDto.setEmail(result.get().getEmail());
-            memberDto.setPhone(result.get().getPhone());
-            memberDto.setClassify(result.get().getClassify());
-
-            return memberDto;
+            return new MemberDto(
+                    result.get().getId(),
+                    result.get().getPassword(),
+                    result.get().getName(),
+                    result.get().getNickname(),
+                    result.get().getBirth(),
+                    result.get().getEmail(),
+                    result.get().getPhone(),
+                    result.get().getClassify()
+            );
         }
     }
 }
